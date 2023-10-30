@@ -3,13 +3,14 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Contoso Task Pane Add-in</title>
+    <title>Mail Shark Variable Data Processor</title>
 
+    <!-- Testing if JQuery is allowed -->
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <!-- Office JavaScript API -->
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
 
@@ -22,33 +23,64 @@
 
 <body class="ms-font-m ms-welcome ms-Fabric">
     <header class="ms-welcome__header ms-bgColor-neutralLighter">
-        <img width="90" height="90" src="../../assets/logo-filled.png" alt="Contoso" title="Contoso" />
-        <h1 class="ms-font-su">Welcome</h1>
+        <img width="90" height="90" src="../../assets/shark.png" alt="Mail Shark" title="Mail Shark" />
+        <h1 class="ms-font-su">Variable Data Processor</h1>
     </header>
     <section id="sideload-msg" class="ms-welcome__main">
         <h2 class="ms-font-xl">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
     </section>
+    <section>
+        
+    </section>
     <main id="app-body" class="ms-welcome__main" style="display: none;">
-        <h2 class="ms-font-xl"> Discover what Office Add-ins can do for you today! </h2>
-        <ul class="ms-List ms-welcome__features">
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Ribbon ms-font-xl"></i>
-                <span class="ms-font-m">Achieve more with Office integration</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Unlock ms-font-xl"></i>
-                <span class="ms-font-m">Unlock features and functionality</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Design ms-font-xl"></i>
-                <span class="ms-font-m">Create and visualize like a pro</span>
-            </li>
-        </ul>
-        <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
-        <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
-            <span class="ms-Button-label">Run</span>
-        </div>
+        <p>Open this taskpane with a list from Data Processing to get started.</p>
+        <p id="test"></p>
+        <hr/>
+        <h2>Presets</h2>
+        <label id="presetLabel" for="presets">Select a preset below:</label>
+        <select id="presets">
+            <option value="1">Variable Letter, 2-Up</option>
+            <option value="2">Variable Legal, 1-Up</option>
+            <option value="3">Plastic New Mover</option>
+            <option value="4">Postcard New Mover</option>
+        </select>
+        <hr/>
+        <h2>Manual Set Up</h2>
+        <div class="inline"><label for="numup">Number-Up</label> <input type="number" min="1" id="numup" value="1"></div>
+        <div class="inline"><input type="checkbox" id="alt" onchange="toggleAlt()"> <label for="alt">Alternating Rows</label></div>
+            <label id="altNumId" for="altNum" style="display:none;">Number of alternating rows</label> 
+            <input type="number" min="2" id="altNum" style="display:none;" value="2">
+            <div class="inline"><label for="drops">Drops</label> <input type="number" min="1" id="numup" value="1"></div>
     </main>
+    <script>
+        var presets=[
+            {id: '1', up: 2, alt:false, altnum: 0},
+            {id: '2', up: 1, alt:false, altnum: 0},
+            {id: '3', up: 9, alt:true, altnum: 9},
+            {id: '4', up: 4, alt:false, altnum:0},
+        ]
+        $("#presets").on("change", function(){
+            let select= $("#presets").val();
+            let result = presets.filter((sets) => sets.id == select);
+            $("#numup").val(result[0].up);
+            $("#alt").prop("checked", result[0].alt);
+        });
+
+        function toggleAlt(){
+            // Don't use toggle-- What if the preset checks the box?
+            // $("#altNumId").toggle();
+            // $("#altNum").toggle();
+            if ($("#alt").prop("checked")){
+                // Alternating Rows selected.
+                $("#altNumId").show();
+                $("#altNum").show();
+            } else {
+                $("#altNumId").hide();
+                $("#altNum").hide();
+            }
+
+        }
+    </script>
 </body>
 
 </html>

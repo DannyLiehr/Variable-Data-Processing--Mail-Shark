@@ -78,3 +78,12 @@
 b {
     font-weight: bold;
 }
+
+.inline{
+    display: inline-block;
+    margin: 1em auto;
+}
+
+input[type=number]{
+    width: 3em;
+}
