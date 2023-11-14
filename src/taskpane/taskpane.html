@@ -43,6 +43,11 @@
             <option value="2">Variable Legal, 1-Up</option>
             <option value="3">Plastic New Mover</option>
             <option value="4">Postcard New Mover</option>
+            <option value="5">Plastic Postcard (Small)</option>
+            <option value="6">Plastic Postcard (Medium)</option>
+            <option value="7">Plastic Postcard (Large)</option>
+            <option value="8">Menu</option>
+            <option value="9">Magnet</option>
         </select>
         <hr/>
         <h2>Manual Set Up</h2>
@@ -51,6 +56,7 @@
             <label id="altNumId" for="altNum" style="display:none;">Number of alternating rows</label> 
             <input type="number" min="2" id="altNum" style="display:none;" value="2">
             <div class="inline"><label for="drops">Drops</label> <input type="number" min="1" id="numup" value="1"></div>
+            <button id="generate">Process Data</button>
     </main>
     <script>
         var presets=[
@@ -58,6 +64,11 @@
             {id: '2', up: 1, alt:false, altnum: 0},
             {id: '3', up: 9, alt:true, altnum: 9},
             {id: '4', up: 4, alt:false, altnum:0},
+            {id: '5', up: 9, alt:true, altnum:9},
+            {id: '6', up: 4, alt:true, altnum:4},
+            {id: '7', up: 3, alt:true, altnum:3},
+            {id: '8', up: 1, alt:false, altnum:0},
+            {id: '9', up: 1, alt:false, altnum:0},
         ]
         $("#presets").on("change", function(){
             let select= $("#presets").val();
@@ -68,8 +79,6 @@
 
         function toggleAlt(){
             // Don't use toggle-- What if the preset checks the box?
-            // $("#altNumId").toggle();
-            // $("#altNum").toggle();
             if ($("#alt").prop("checked")){
                 // Alternating Rows selected.
                 $("#altNumId").show();
